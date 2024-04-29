@@ -37,8 +37,12 @@ function Iniciar() {
 function MouseDown(evt) {
     var mousePos = getMousePos(canvas, evt);
     for (var i = circles.length - 1; i >= 0; i--) {
-        if (ctx.isPointInPath(circles[i].x, circles[i].y)) {
-            selectedCircle = circles[i];
+        var circle = circles[i];
+        var dx = circle.x - mousePos.x;
+        var dy = circle.y - mousePos.y;
+        var distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance <= circle.radius) {
+            selectedCircle = circle;
             break;
         }
     }
