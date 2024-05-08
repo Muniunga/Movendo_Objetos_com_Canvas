@@ -4,8 +4,16 @@ var circles = []; // array para armazenar informações sobre os círculos
 var WIDTH = 500; // largura da área retangular
 var HEIGHT = 200; // altura da área retangular
 var selectedCircle = null; // variável para armazenar o círculo selecionado
+var backgroundColorRed = false; // indica se a cor de fundo vermelha está ativada
 
 function Desenhar() {
+    if (backgroundColorRed) {
+        ctx.fillStyle = "red";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+    } else {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    }
+
     for (var i = 0; i < circles.length; i++) {
         ctx.beginPath();
         ctx.fillStyle = "blue";
@@ -18,6 +26,10 @@ function LimparTela() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
 
+function AlterarCorFundoVermelha() {
+    backgroundColorRed = !backgroundColorRed; // Inverte o estado da cor de fundo vermelha
+}
+
 function Iniciar() {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
@@ -27,9 +39,13 @@ function Iniciar() {
     canvas.addEventListener("mouseup", MouseUp, false);
     canvas.addEventListener("mousemove", MouseMove, false);
 
-    // Adicionando evento de clique para o botão
+    // Adicionando evento de clique para o botão "Adicionar Círculo"
     var addCircleButton = document.getElementById("addCircleButton");
     addCircleButton.addEventListener("click", AdicionarCirculo, false);
+
+    // Adicionando evento de clique para o botão "Cor de Fundo Vermelha"
+    var changeBgColorButton = document.getElementById("changeBgColorButton");
+    changeBgColorButton.addEventListener("click", AlterarCorFundoVermelha, false);
 
     return setInterval(Atualizar, 10);
 }
@@ -70,7 +86,6 @@ function AdicionarCirculo() {
 }
 
 function Atualizar() {
-    LimparTela();
     Desenhar();
 }
 
